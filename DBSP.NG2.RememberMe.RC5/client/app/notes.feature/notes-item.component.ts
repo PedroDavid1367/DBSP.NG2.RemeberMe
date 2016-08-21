@@ -1,12 +1,12 @@
-import { Component, Input }  from "@angular/core";
-import { Note }              from "./note.model"; 
+import { Component, Input, Output, EventEmitter }  from "@angular/core";
+import { Note }                                    from "./note.model";
 
 @Component({
   selector: 'notes-item',
   template: `
-  <div class="card blue-grey darken-1">
+  <div class="card blue-grey lighten-1">
     <div class="card-content white-text">
-      <span class="card-title">{{ note.title }}</span>
+      <span class="card-title" style="color:beige;">{{ note.title }}</span>
       <p>
         {{ note.content }}    
       </p>
@@ -14,9 +14,10 @@ import { Note }              from "./note.model";
       <p>Category: {{ note.category }}</p>
       <p>Priority: {{ note.priority }}</p>
     </div>
-    <div class="card-action">
-      <a href="#">This is a link</a>
-      <a href="#">This is a link</a>
+    <div class="card-action blue-grey darken-1">
+      <input type="button" class="btn-flat" style="color:white;" value="Edit" />
+      <input type="button" class="btn-flat" style="color:white;" value="To reminder" />
+      <input type="button" class="btn-flat" style="color:white;" value="Delete" (click)="delete()" />
     </div>
   </div>
   `
@@ -24,4 +25,9 @@ import { Note }              from "./note.model";
 export class NotesItemComponent {
 
   @Input() public note: Note;
+  @Output() public deleteEventEmitter: EventEmitter<NotesItemComponent> = new EventEmitter<NotesItemComponent>();
+
+  public delete() {
+    this.deleteEventEmitter.emit(this);
+  }
 }
