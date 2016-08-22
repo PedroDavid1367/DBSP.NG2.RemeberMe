@@ -4,19 +4,24 @@ import { CommonModule }             from "@angular/common";
 import { routing }                  from "./notes.routing";
 import { NotesHomeComponent }       from "./notes-home.component"
 import { NotesContainerComponent }  from "./notes-container.component";
+import { NotesAddItemComponent }    from "./notes-add-item.component";
 import { NotesListComponent }       from "./notes-list.component";
 import { NotesItemComponent }       from "./notes-item.component";
-import { NotesManagerComponent }  from "./notes-manager.component";
+import { NotesManagerComponent }    from "./notes-manager.component";
 import { NotesService }             from "./notes.service"; 
+
+import { FormsModule }  from "@angular/forms";
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     routing
   ],
   declarations: [
     NotesHomeComponent,
     NotesContainerComponent,
+    NotesAddItemComponent,
     NotesListComponent,
     NotesItemComponent,
     NotesManagerComponent

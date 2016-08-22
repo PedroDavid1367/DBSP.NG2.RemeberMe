@@ -8,6 +8,7 @@ import { NotesItemComponent }                      from "./notes-item.component"
   selector: 'notes-container',
   template: `
   <div>{{ greeting }}</div>
+  <notes-add-item *ngIf="isAddNoteEnabled"></notes-add-item>
   <notes-list [notes]="_notes"
               (deleteEventEmitter)="deleteNote($event)">
   </notes-list>
@@ -30,6 +31,7 @@ import { NotesItemComponent }                      from "./notes-item.component"
 export class NotesContainerComponent implements OnInit {
 
   @Input() public greeting: string;
+  @Input() public isAddNoteEnabled: boolean;
   public _notes: Note[];
   private _noteToDelete: NotesItemComponent;
 
