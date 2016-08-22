@@ -110,6 +110,7 @@
     <TypeScriptCompile Include="client\app\main.ts" />
     <TypeScriptCompile Include="client\app\mocked-data\app-mocked-data.ts" />
     <TypeScriptCompile Include="client\app\notes.feature\note.model.ts" />
+    <TypeScriptCompile Include="client\app\notes.feature\notes-manager.component.ts" />
     <TypeScriptCompile Include="client\app\notes.feature\notes-item.component.ts" />
     <TypeScriptCompile Include="client\app\notes.feature\notes-list.component.ts" />
     <TypeScriptCompile Include="client\app\notes.feature\notes-container.component.ts" />
