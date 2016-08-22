@@ -6,6 +6,7 @@ import { NotesHomeComponent }       from "./notes-home.component"
 import { NotesContainerComponent }  from "./notes-container.component";
 import { NotesListComponent }       from "./notes-list.component";
 import { NotesItemComponent }       from "./notes-item.component";
+import { NotesManagerComponent }  from "./notes-manager.component";
 import { NotesService }             from "./notes.service"; 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NotesService }             from "./notes.service";
     NotesHomeComponent,
     NotesContainerComponent,
     NotesListComponent,
-    NotesItemComponent
+    NotesItemComponent,
+    NotesManagerComponent
   ],
   providers: [
     NotesService

@@ -8,20 +8,22 @@ import { OidcTokenManagerService }  from "../common.services/oidc-token-manager.
     <div class="col s12 offset-m1">
       <h1 class="center-align">Options</h1>
       <br />
-      <p>
-        Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod,
-        iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
-      </p>
+      <notes-manager (onGreeting)="sendToListComponent($event)"></notes-manager>
     </div>
   </div>
 
   <div class="col s12 m8">
     <div class="col s12 offset-m1">
-      <notes-container></notes-container>
+      <notes-container [greeting]="_greeting"></notes-container>
     </div>
   </div>
   `
 })
 export class NotesHomeComponent {
 
+  private _greeting: string;
+
+  public sendToListComponent(greeting: string) {
+    this._greeting = greeting;
+  }
 }

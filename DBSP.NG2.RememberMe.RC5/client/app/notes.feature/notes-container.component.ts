@@ -1,11 +1,13 @@
-import { Component, OnInit, ElementRef, Inject }   from "@angular/core";
+import { Component, OnInit, ElementRef, Inject,
+  Input }                                          from "@angular/core";
 import { NotesService }                            from "./notes.service";
-import { Note }                                    from "./note.model"; 
+import { Note }                                    from "./note.model";
 import { NotesItemComponent }                      from "./notes-item.component";
 
 @Component({
   selector: 'notes-container',
   template: `
+  <div>{{ greeting }}</div>
   <notes-list [notes]="_notes"
               (deleteEventEmitter)="deleteNote($event)">
   </notes-list>
@@ -27,6 +29,7 @@ import { NotesItemComponent }                      from "./notes-item.component"
 })
 export class NotesContainerComponent implements OnInit {
 
+  @Input() public greeting: string;
   public _notes: Note[];
   private _noteToDelete: NotesItemComponent;
 
