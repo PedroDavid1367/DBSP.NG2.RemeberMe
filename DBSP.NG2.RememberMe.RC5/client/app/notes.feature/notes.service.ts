@@ -17,8 +17,8 @@ export class NotesService {
       .catch(this.handleError);
   }
 
-  public addNote(noteContainer: {}): Observable<Note> {
-    let body = JSON.stringify(noteContainer);
+  public addNote(note: Note): Observable<Note> {
+    let body = JSON.stringify(note);
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     return this.http

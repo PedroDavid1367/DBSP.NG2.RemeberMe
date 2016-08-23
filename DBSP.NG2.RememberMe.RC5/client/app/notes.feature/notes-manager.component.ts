@@ -5,9 +5,14 @@ import { Note }                                    from "./note.model";
 
 @Component({
   selector: 'notes-manager',
+  styles: [`  
+  div a {
+    color:#546e7a;
+  }  
+  `],
   template: `
   <input type="button" value="add greeting" (click)="addGreeting()" />
-  <div class="collection">
+  <div class="collection z-depth-1">
     <a href="#" class="collection-item" 
        (click)="setEnableAddNote()">Add note</a>
     <a href="#" class="collection-item">Filter notes</a>

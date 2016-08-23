@@ -8,7 +8,9 @@ import { NotesItemComponent }                      from "./notes-item.component"
   selector: 'notes-container',
   template: `
   <div>{{ greeting }}</div>
-  <notes-add-item *ngIf="isAddNoteEnabled"></notes-add-item>
+  <notes-add-item *ngIf="isAddNoteEnabled"
+                  (addNoteEmitter)="addNote($event)">
+  </notes-add-item>
   <notes-list [notes]="_notes"
               (deleteEventEmitter)="deleteNote($event)">
   </notes-list>
@@ -49,6 +51,15 @@ export class NotesContainerComponent implements OnInit {
       .getNotes()
       .subscribe(notes => {
         this._notes = notes;
+        // TODO: Subscribe to error and display it.
+      });
+  }
+
+  private addNote(note: Note) {
+    this._notesService
+      .addNote(note)
+      .subscribe(note => {
+        this._notes.push(note);
         // TODO: Subscribe to error and display it.
       });
   }

@@ -4,55 +4,56 @@ import { Note }                                    from "./note.model";
 
 @Component({
   selector: 'notes-add-item',
+  styles: [`
+  .ng-valid[required] {
+    border-bottom: 1px solid #42A948; /* green */
+  }
+
+  .ng-invalid {
+    border-bottom: 1px solid #a94442; /* red */
+  }
+  `],
   template: `
-  {{ debugModel }}
-  <div class="row">
-    <form class="col s12">
+  {{ diagnostic }}
+  <br />
+  <br />
+  <div class="row z-depth-4" [hidden]="submitted">
+    <form class="col s12" *ngIf="active" (ngSubmit)="onSubmit()" #noteForm="ngForm">
       <div class="row">
         <div class="input-field col s12">
           <input id="title" type="text" class="validate" required
-                 [(ngModel)]="_model.title" name="title">
-          <label for="title">Title</label>
+                 [(ngModel)]="_model.title" name="title"
+                 #name="ngModel">  
+          <label for="title" data-error="invalid" data-success="valid">Title</label>
+          <div [hidden]="name.valid" 
+               class="alert alert-danger">
+            <sup>Name is required</sup>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
           <textarea id="content" class="materialize-textarea validate" required
                     [(ngModel)]="_model.content" name="content"></textarea>
-          <label for="content">Content</label>
+          <label for="content" data-error="invalid" data-success="valid">Content</label>
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s12 m6">
           <input id="category" type="text" class="validate" required
                  [(ngModel)]="_model.category" name="category">
-          <label for="category">Category</label>
+          <label for="category" data-error="invalid" data-success="valid">Category</label>
+        </div>
+        <div class="input-field col s12 m6">
+          <input id="category" type="number" class="validate" required
+                 [(ngModel)]="_model.priority" name="priority">
+          <label for="priority" data-error="invalid" data-success="valid">Priority</label>
         </div>
       </div>
-
-      <div class="input-field col s12">
-        <select id="cat" #sel [(ngModel)]="_model.priority" name="priority">
-          <option value="" disabled selected>Choose your option</option>
-          <option value="1">Option 1</option>
-          <option value="2">Option 2</option>
-          <option value="3">Option 3</option>
-        </select>
-        <label>Materialize Select</label>
-      </div>
-            
       <div class="row">
-        <p>
-          <input class="with-gap" [(ngModel)]="_model.priority" name="group1" type="radio" id="test1" />
-          <label for="test1">Red</label>
-        </p>
-        <p>
-          <input class="with-gap" name="group1" type="radio" id="test2" />
-          <label for="test2">Yellow</label>
-        </p>
-        <p>
-          <input class="with-gap" name="group1" type="radio" id="test3"  />
-          <label for="test3">Green</label>
-        </p>
+        <input class="btn-flat" type="submit" [disabled]="!noteForm.form.valid" value="Save" />
+        <input class="btn-flat" type="button" value="Reset note" />
+        <input class="btn-flat" type="button" value="Cancel" />
       </div>
     </form>
   </div>
@@ -60,18 +61,32 @@ import { Note }                                    from "./note.model";
 })
 export class NotesAddItemComponent implements OnInit {
 
-  private _model: Note = new Note("", "", "", "");
+  @Output() public addNoteEmitter: EventEmitter<Note> = new EventEmitter<Note>(); 
 
-  constructor(private _elRef: ElementRef,
-    @Inject("$") private $: any) {
+  private _model: Note = new Note("", "", "", "");
+  submitted = false;
+
+  onSubmit() {
+    this.submitted = true;
+    this.addNoteEmitter.emit(this._model);
+  }
+
+  // Reset the form with a new hero AND restore 'pristine' class state
+  // by toggling 'active' flag which causes the form
+  // to be removed/re-added in a tick via NgIf
+  // TODO: Workaround until NgForm has a reset method (#6822)
+  active = true;
+
+  resetNote() {
+    this._model = new Note("", "", "", "");
+    this.active = false;
+    setTimeout(() => this.active = true, 0);
   }
 
   public ngOnInit() {
-    this.$(this._elRef.nativeElement)
-      .find("#cat").material_select();
   }
 
-  private get debugModel(): string {
+  private get diagnostic(): string {
     return JSON.stringify(this._model);
   }
 }
